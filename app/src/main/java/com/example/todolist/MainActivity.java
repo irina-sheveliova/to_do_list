@@ -45,21 +45,18 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+        //TODO, fix the issue, removed item stays on the screen unless user clicks again
+
         listView.setOnItemClickListener((adapterView, view, position, l) -> {
 
-            AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-            alert.setTitle("Delete");
-            alert.setMessage("Do you want to delete this item from the list?");
-            alert.setCancelable(false);
-            alert.setNegativeButton("No", (dialogInterface, i) -> dialogInterface.cancel());
-            alert.setPositiveButton("Yes", (dialogInterface, i) -> {
-                itemList.remove(position);
+            new AlertDialogFragment().show(getSupportFragmentManager(), AlertDialogFragment.TAG);
+
+            if (AlertDialogFragment.isRemoved) {
+                itemList.remove(position-1);
                 arrayAdapter.notifyDataSetChanged();
                 FileHelper.writeData(itemList, getApplicationContext());
-            });
-
-            AlertDialog alertDialog = alert.create();
-            alertDialog.show();
+                AlertDialogFragment.isRemoved = false;
+            };
 
         });
 
