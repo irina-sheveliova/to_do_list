@@ -28,12 +28,14 @@ public class FileHelper {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static ArrayList<String> readData(Context context) {
         ArrayList<String> itemList = null;
 
         try {
             FileInputStream fis = context.openFileInput(FILENAME);
             ObjectInputStream ois = new ObjectInputStream(fis);
+            //Generates warning in the following line
             itemList = (ArrayList<String>) ois.readObject();
 
         } catch (FileNotFoundException e) {
